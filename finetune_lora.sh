@@ -1,0 +1,38 @@
+HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=1 deepspeed ./Video-LLaVA/videollava/train/train_mem.py \
+    --lora_enable True --lora_r 128 --lora_alpha 256 --lora_dropout 0.05 --mm_projector_lr 5e-6 \
+    --deepspeed ./Video-LLaVA/scripts/zero2_offload.json \
+    --model_name_or_path LanguageBind/Video-LLaVA-7B \
+    --version v1 \
+    --data_path /mnt/datascience1/Adrien/videollava-ft/dataset/trainval_data_final.json \
+    --data_eval_path /mnt/datascience1/Adrien/videollava-ft/dataset/test_data_final.json \
+    --video_folder /mnt/datascience1/Adrien/videollava-ft/dataset/raw_videos/ \
+    --video_tower LanguageBind/LanguageBind_Video_merge \
+    --mm_projector_type mlp2x_gelu \
+    --pretrain_mm_mlp_adapter ./Video-LLaVA/checkpoints/videollava-7b-pretrain/mm_projector.bin \
+    --mm_vision_select_layer -2 \
+    --mm_use_im_start_end False \
+    --mm_use_im_patch_token False \
+    --image_aspect_ratio pad \
+    --group_by_modality_length True \
+    --bf16 True \
+    --output_dir ./Video-LLaVA/checkpoints/videollava-7b-lora-ft3-1epoch \
+    --num_train_epochs 1 \
+    --per_device_train_batch_size 1 \
+    --per_device_eval_batch_size 1 \
+    --gradient_accumulation_steps 1 \
+    --evaluation_strategy "steps" \
+    --eval_steps 300 \
+    --save_strategy "epoch" \
+    --save_total_limit 1 \
+    --learning_rate 5e-7 \
+    --weight_decay 0. \
+    --warmup_ratio 0.03 \
+    --lr_scheduler_type "cosine" \
+    --logging_steps 1 \
+    --tf32 True \
+    --model_max_length 2048  --tokenizer_model_max_length 3072 \
+    --gradient_checkpointing False \
+    --dataloader_num_workers 4 \
+    --lazy_preprocess True \
+    --report_to wandb \
+    --cache_dir "/mnt/esperanto/et/huggingface/hub"
