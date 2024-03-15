@@ -1,6 +1,7 @@
 # videollava-ft
 
-This repo proposes to fine-tune videollava for a specific application.
+This repo proposes to fine-tune videollava for a specific application (fine-tuned with lora applied to the language model, and releasing the multimodal projector).
+
 In training, we add random crop, random tilt to the images and try to select non-blurry images. The images are selected randomly from available time segments provided in the dataset.
 In inference, we use original videollava implementation (no crop, no tilt, uniform sampling).
 
