@@ -20,5 +20,17 @@ Data used is then videos, along with relevant segments (at least 8), and a recip
 
 The training process presents good results with the following parameters:
 ```
-
+lora_r 128
+lora_alpha 256
+lora_dropout 0.05
+mm_projector_lr 5e-6
+num_train_epochs 1
+per_device_train_batch_size 1
+gradient_accumulation_steps 1
+weight_decay 0.
+warmup_ratio 0.03
+lr_scheduler_type "cosine"
+model_max_length 2048
+tokenizer_model_max_length 3072
+gradient_checkpointing False
 ```
